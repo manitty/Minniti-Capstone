@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Indie Market</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <div id="fb-root"></div>
+    <script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="canonical" href="/web/tweet-button">
+    <link rel="me" href="https://twitter.com/twitterdev">
+
+
+	<style>
+		input{
+			color: #000;
+		}
+	</style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse sidebar" role="navigation">
+        <div class="container-fluid">
+    		<!-- Brand and toggle get grouped for better mobile display -->
+    		<div class="navbar-header">
+    			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+    				<span class="sr-only">Toggle navigation</span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    			</button>
+    			<a class="navbar-brand" href="#">Menu</a>
+    		</div>
+    		<!-- Collect the nav links, forms, and other content for toggling -->
+    		<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+    			<ul class="nav navbar-nav">
+    				<li id="Home" class="active"><a class="disabled" href="">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+            <li id="Store"><a class="disabled" href="">Store<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
+            <li id="Library"><a class="disabled" href="">Library<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list-alt"></span></a></li>
+            <li id="Profile"><a class="disabled" href="">Profile<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+    				<li id="Settings"><a class="disabled" href="">Settings<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
+    			</ul>
+    		</div>
+    	</div>
+    </nav>
+    <div>
+      <div id="homeContent" style="display: block;">
+        <div align="center">
+          <div class="container">
+            <div>
+                <h1>Hello</h1>
+                <h1 id="user_id"></h1>
+                <h1>Welcome to Indie Market</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="storeContent" style="display: none;">
+        <br> <br>
+        <div align="center" >
+          <div class="container">
+            <div>
+      			  <div>
+					<div class="form-group">
+					  <label for="prefMedia">View by:</label>
+					  <select onchange="setStoreMedia();" class="form-control view-media-by" id="store-view-media-by">
+						<option value="__all__">-</option>
+						<option value="mt">Media Type</option>
+						<option value="art">Artist</option>
+					  </select>
+					</div>
+					<div class="form-group">
+					  <div class="input-group">
+						<span class="input-group-addon">
+						  <span class="glyphicon glyphicon-search"></span>
+						</span>
+						<input type="text" id="txtSearchStore" placeholder="Search..."
+						  class="form-control" placeholder="Username">
+					  </div>
+					</div>
+        				<div class="form-group">
+        				  <label for="prefMedia">Filter by Media Type:</label>
+        				  <select onchange="setStoreMedia();" class="form-control view-media-type" id="store-view-media-type">
+        					<!-- option load by Jquery-->
+        				  </select>
+        				</div>
+        				<div class="form-group">
+        				  <label for="prefMedia">Filter by Artist:</label>
+        				  <select onchange="setStoreMedia();" class="form-control view-media-artiste" id="stor-view-media-artiste">
+        					<!-- option load by Jquery-->
+        				  </select>
+        				</div>
+              </div>
+              <div id="store-media">
+                <div>
+                  <textarea id="StoreResults" cols="60" rows="10" class="textarea">Will Display item Details</textarea>
+        			  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="purchaseConfirmationContent" class="row" style="display: none; width: 100%">
+        <br><br>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <div class="row">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h3 class="panel-title">Purchase Info</h3>
+              </div>
+              <div class="panel-body">
+                <p>
+                  <h4>Cart</h4>
+                  <ul id="lstPurchasedItems">
+                    <li>Title Title Title <span class="label label-info pull-right">$4.35</span></li>
+                    <li>Title of 2nd item here <span class="label label-info pull-right">$8.66</span></li>
+                  </ul>
+                </p>
+                <p>
+                  <h4>Total Price:<span id="lblPurchaseTotalPrice" class="label label-primary pull-right">$24.52</span></h4>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Enter Payment Info</h3>
+              </div>
+              <div class="panel-body">
+                <form id="frmPaymentInfo">
+                  <div class="form-group">
+                    <label for="txtPaymentFirstName">First Name</label>
+                    <input id="txtPaymentFirstName" name="FirstName" type="text" class="form-control" required></input>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtPaymentLastName">Last Name</label>
+                    <input id="txtPaymentLastName" name="LastName" type="text" class="form-control" required></input>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtPaymentZipCode">Zip Code</label>
+                    <input id="txtPaymentZipCode" name="ZipCode" type="number" class="form-control" required></input>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtPaymentCardNumber">Card Number</label>
+                    <input id="txtPaymentCardNumber" name="CardNumber" type="text" class="form-control"
+                    pattern="\d{4}-\d{4}-\d{4}-\d{4}" placeholder="XXXX-XXXX-XXXX-XXXX" required></input>
+                  </div>
+                  <div>
+                    <div class="pull-right">
+                      <input type="submit" id="btnConfirmPurchase" class="btn btn-primary" value="Complete Purchase"></input>
+                      <input type="button" id="btnCancelPurchase" class="btn btn-warning" value="Cancel" onclick="cancelPurchase()"></input>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="receiptContent" class="row" style="display: none; width: 100%">
+        <br><br>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              Purchase Successful
+            </div>
+            <div class="panel-body">
+              <h3>Purchase Total: <span id="lblReceiptTotalPrice" class="label label-primary">$25.43</span></h3>
+              <h4>Media Items</h4>
+              <ul id="lstReceiptItems">
+                <li>Title Title Title <button class="btn-primary">Download</button></li>
+              </ul>
+              <br>
+              <div class="pull-right">
+                <button class="btn btn-default" onclick="libraryFunction()">View Media Library</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="libraryContent" style="display: none;">
+        <br><br>
+        <div align="center" >
+          <div class="container">
+      			<div>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-search"></span>
+                  </span>
+                  <input type="text" id="txtSearchLibrary" placeholder="Search..."
+                    class="form-control" placeholder="Username">
+                </div>
+              </div>
+      				<div class="form-group">
+      				  <label for="prefMedia">View by Media Type:</label>
+      				  <select class="form-control" id="view-media-type">
+      					<option>All Media type</option>
+      					<option>Music</option>
+      					<option>Videos</option>
+      					<option>Audiobooks</option>
+      					<option>Images</option>
+      					<option>Software</option>
+      				  </select>
+      				</div>
+      				<div class="form-group">
+      				  <label for="prefMedia">View by Artist:</label>
+      				  <select class="form-control" id="view--artiste">
+      					<option>All artiste</option>
+      					<option>Zorku Lqzeekhlik</option>
+      					<option>Kayly Rajnigandhi Kapuri</option>
+      					<option>Crele Batone</option>
+      					<option>Tony Flanderston</option>
+      					<option>Palm Beastly</option>
+      				  </select>
+      				</div>
+            </div>
+            <div id="library">
+              <div class="libitem">
+                Library Item 1
+                <a href="./test1.mp3" download><span id="dl1" class="glyphicon glyphicon-download-alt"></span></a>
+                <span class="glyphicon glyphicon-align-justify"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="profileContent" style="display: none;">
+        <div align="center" >
+          <div class="container">
+            <div>
+              <div id="result" ></div>
+                <p style="font-size: 40pt; text-align: center;">Profile</p>
+
+                <div><img style="width: 100px;height: 125px;" id="avatar" src="./profileplacholder.png"/></div>
+                <br><br>
+                <div>Bio:<br><textarea id="description" name="description" rows="15" cols="50"></textarea></div>
+                <br><br>
+                <p><a class="twitter-share-button" target="_blank" href="https://twitter.com/intent/tweet?text=Hello%20From%20Indie%20Market" data-size="large">Tweet</a><br>
+                <div class="fb-share-button" data-href="https://github.com/manitty/Indie-Market" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fmanitty%2FIndie-Market&amp;src=sdkpreparse">Share on Facebook</a>
+                </div>
+                </p>
+
+                <br><br>
+                  <form id="user-profile">
+                    <div id="result" ></div>
+                    <p>First Name:      <input id="fname" type="text" name="fname"></p>
+                    <p>Last Name:       <input id="lname" type="text" name="lname"></p>
+                <p>Email:           <input id="email" type="text" name="email"></p>
+                <p>Gender:          <input id="gender" type="text" name="gender"></p>
+                    <p>Country:         <input id="country" type="text" name="country" type="text" name="country"></p>
+                    <p>Favorite Genre:  <input id="favoritegenre" type="text" name="favoritegenre"></p>
+                    <p>Favorite Artist: <input id="favoriteartist" type="text" name="favoriteartist"></p>
+                    <div class="form-group">
+                      <label for="prefMedia">Preferred Media Type:</label>
+                      <select class="form-control user-view-media-type" name="prefMedia" id="prefMedia">
+                        <option>Music</option>
+                        <option>Videos</option>
+                        <option>Audiobooks</option>
+                        <option>Images</option>
+                        <option>Software</option>
+                      </select>
+                    </div>
+                    <input class="btn btn-lg btn-primary" type="Submit" name="save" placeholder="Save">
+
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="settingsContent" style="display: none;">
+        <div align="center">
+          <div class="container">
+            <div>
+              <br><br><br>
+              <button class="btn btn-lg btn-primary" onclick="logout()">Log Out</button>
+            </div>
+            <br><br><br>
+            <div>
+              <button onclick="openAbout()" class="btn btn-lg btn-primary" type="submit">About Indie Market</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="divMediaDetails" class="modal-background" style="display: none;">
+      <div class="modal-window">
+        <div class="row">
+          <h3 id="lblMediaDetailsTitle">Item Title</h3>
+        </div>
+        <div class="row">
+          <div class="col-xs-4">
+            <img width="150" height="150" />
+          </div>
+          <div class="col-xs-offset-1 col-xs-7">
+            <h4>Authors</h4>
+            <ul id="lstMediaDetailsAuthors">
+              <li>Author 1</li>
+              <li>Author 2</li>
+            </ul>
+            <h4>Publication Date</h4>
+            <p id="pMediaDetailsPubDate">1/1/2017</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-5">
+            <h4>Media Type</h4>
+            <p id="pMediaDetailsType">Video</p>
+          </div>
+          <div class="col-xs-7">
+            <h4>Duration</h4>
+            <p id="pMediaDetailsDuration">5:30</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-10">
+            <p id="pMediaDetailsDesc" class="description">Description Description Description</p>
+          </div>
+          <div class="col-xs-2">
+            <button class="btn btn-default" onclick="closeItemDetails()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="./scripts.js"></script>
+  <script src="./download.js"></script>
+    </body>
+</html>

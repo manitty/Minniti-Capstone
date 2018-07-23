@@ -1,0 +1,31 @@
+{
+  "name": "market",
+  "productName": "Indie Market",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Indie Market\"",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
+    "start": "electron . --inspect"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "chai": "^4.1.2",
+    "electron-dl": "^1.10.0",
+    "electron-packager": "^9.1.0",
+    "express": "^4.16.1",
+    "jquery": "^3.2.1",
+    "mocha-generators": "^2.0.0",
+    "mongoose": "^4.12.0",
+    "mongoose-type-email": "^1.0.5",
+    "nightmare": "^2.10.0",
+    "server": "^1.0.0-beta.2"
+  },
+  "devDependencies": {
+    "electron": "^1.8.1"
+  },
+  "description": ""
+}

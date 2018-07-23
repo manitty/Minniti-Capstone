@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <script src="https://use.typekit.net/ayg4pcz.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <div class="container">
+      <h1 class="welcome text-center">Welcome to <br> Indie Market</h1>
+        <div class="card card-container">
+          <h2 class='login_title text-center'>Login with google a account</h2>
+          <hr>
+          <div><a id='sign-in' class="btn btn-lg btn-primary center-block">Login</a></div>
+          <div><a class="btn btn-lg btn-primary center-block" href="https://accounts.google.com/SignUp?hl=en">Register</a></div>
+        </div>
+    </div>
+    <div class="container">
+      <div><a class="btn btn-lg btn-primary center-block" href="viewstore.html">View Store</a></div>
+    </div>
+
+    <script>
+      var code_verifier = 'b9MIKE4nAkQ_f8hn4fp_B53JFj-fjhWaG-Z-3WYWrzq0GBjn.GX43MYsPDGTO2KCU';
+      var client_id = '51906025800-4l9g3513tb97hbg3rvd5uaq5eqrik9m0.apps.googleusercontent.com';
+
+      var authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?'
+        + 'scope=email%20profile'
+        + '&response_type=code'
+        + '&prompt=select_account'
+        + '&state=security_token%3D138r5719ru3e1%26url%3Dhttps://oauth2.example.com/token'
+        + '&redirect_uri=http://127.0.0.1:495/auth'
+        + '&code_challenge=' + code_verifier
+        + '&client_id=' + client_id;
+
+        $(document).ready(function() {
+          $('#sign-in').attr('href', authUrl);
+        });
+    </script>
+  </body>
+</html>

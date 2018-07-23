@@ -1,0 +1,251 @@
+require('mocha-generators')
+  .install();
+
+var Nightmare = require('nightmare');
+var should = require('chai')
+  .should();
+var url = require('url');
+var server = require('server');
+var fs = require('fs');
+var mkdirp = require('mkdirp');
+var path = require('path');
+var rimraf = require('rimraf');
+
+
+
+var tmp_dir = path.join(__dirname, 'tmp')
+
+
+
+process.setMaxListeners(0);
+
+
+var base = 'http://localhost:7500/';
+
+describe('Nightmare download manager', function() {
+  before(function(done) {
+    require('../nightmare-inline-download')(Nightmare);
+    server.listen(7500, done);
+  });
+
+  it('should be constructable', function * () {
+    var nightmare = Nightmare();
+    nightmare.should.be.ok;
+    nightmare.download.should.be.ok;
+    yield nightmare.end();
+  });
+
+  describe('downloads', function() {
+    var nightmare;
+
+    before(function(done) {
+      mkdirp(path.join(tmp_dir, 'subdir'), done);
+    })
+
+    after(function(done) {
+      rimraf(tmp_dir, done)
+    })
+
+    afterEach(function * () {
+      yield nightmare.end();
+    });
+
+
+
+
+
+
+    it('should download a file', function * () {
+      var downloadItem, statFail = false;
+
+      nightmare = Nightmare({
+        paths: {
+          'downloads': tmp_dir
+        },
+      });
+
+      var downloadItem = yield nightmare
+        .goto(fixture('downloads'))
+        .click('#dl1')
+        .download();
+
+      try {
+        fs.statSync(path.join(tmp_dir, '100kib.txt'));
+      } catch (e) {
+        statFail = true;
+      }
+
+      downloadItem.should.be.ok;
+      downloadItem.filename.should.equal('100kib.txt');
+      downloadItem.state.should.equal('completed');
+      statFail.should.be.false;
+    });
+
+
+
+
+
+
+    it('should error when download time exceeds request timeout', function * () {
+      var didForceCancel = false;
+
+      nightmare = Nightmare({
+        paths: {
+          'downloads': tmp_dir
+        },
+        waitTimeout: 30000,
+        maxDownloadRequestWait: 100
+      });
+
+      nightmare.on('download', function(state, downloadInfo) {
+        if (state == 'force-cancelled') {
+          didForceCancel = true;
+        }
+      })
+      yield nightmare
+        .goto(fixture('downloads'))
+        .click('#dl2')
+
+      yield nightmare.wait(1000);
+
+      didForceCancel.should.be.true;
+    });
+
+
+    it('should set a path for a specific download', function * () {
+      var downloadItem, statFail = false,
+        finalState;
+
+      nightmare = Nightmare({
+        paths:{
+          downloads: tmp_dir
+        }
+      });
+
+      var downloadItem = yield nightmare
+        .goto(fixture('downloads'))
+        .click('#dl1')
+        .download(path.join(tmp_dir, 'subdir', 'test1.mp3'));
+
+      try {
+        fs.statSync(path.join(tmp_dir, 'subdir', 'test1.mp3'));
+      } catch (e) {
+        statFail = true;
+      }
+
+      downloadItem.should.be.ok;
+      downloadItem.state.should.equal('completed');
+      statFail.should.be.false;
+    });
+
+
+
+
+
+
+
+    it('should allow for multiple downloads', function(done) {
+      var downloadItem, statFail = false,
+        finalState;
+
+      nightmare = Nightmare({
+        paths:{
+          downloads: tmp_dir
+        }
+      });
+
+      nightmare
+      .goto('http://localhost:7500/downloads')
+      .evaluate(function(){
+        return ['dl1'];
+      })
+      .then((linknames) => {
+        return linknames.reduce((acc, name, ix) => {
+          return acc.then(function(results){
+            return nightmare
+              .click('#'+name)
+              .download(path.resolve(tmp_dir, 'subdir', `thing_${ix}.txt`))
+              .then(info => {
+                results.push(info);
+                return results;
+              });
+          });
+        }, Promise.resolve([]))
+        .then(function(results){
+          var stats = [];
+          try {
+            stats.push(fs.statSync(path.join(tmp_dir, 'subdir', 'test1.mp3')));
+            stats.push(fs.statSync(path.join(tmp_dir, 'subdir', 'test2.mp3')));
+            stats.push(fs.statSync(path.join(tmp_dir, 'subdir', 'test3.mp3')));
+            stats.push(fs.statSync(path.join(tmp_dir, 'subdir', 'test4.mp3')));
+          } catch (e) {
+            statFail = true;
+          }
+
+          statFail.should.be.false;
+          if(!statFail){
+            results[0].totalBytes.should.equal(stats[0].size);
+            /test1\.mp3$/.test(results[0].path).should.be.true;
+            results[1].totalBytes.should.equal(stats[1].size);
+            /test2\.mp3$/.test(results[1].path).should.be.true;
+            results[2].totalBytes.should.equal(stats[2].size);
+            /test3\.mp3$/.test(results[2].path).should.be.true;
+            results[3].totalBytes.should.equal(stats[3].size);
+            /test4\.mp3$/.test(results[3 ].path).should.be.true;
+          }
+          done();
+        })
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+    it('should cancel a specific download', function * () {
+      var downloadItem, finalState;
+
+      nightmare = Nightmare({
+        paths: {
+          downloads: tmp_dir
+        }
+      });
+
+      var downloadItem = yield nightmare
+        .goto(fixture('downloads'))
+        .click('#dl1')
+        .download('cancel');
+
+      downloadItem.should.be.ok;
+      downloadItem.state.should.equal('cancelled');
+    });
+
+    it('should ignore all downloads', function * () {
+      nightmare = Nightmare({
+        paths: {
+          'downloads': tmp_dir
+        },
+        ignoreDownloads: true
+      });
+
+      var downloadItem = yield nightmare
+        .goto(fixture('downloads'))
+        .click('#dl1')
+        .download();
+
+      downloadItem.should.be.ok;
+      downloadItem.state.should.equal('cancelled');
+    });
+  });
+});
+
+
+
+function fixture(path) {
+  return url.resolve(base, path);
+}

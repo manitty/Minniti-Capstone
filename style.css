@@ -1,0 +1,388 @@
+body,html{
+height: 100%;
+background-repeat: no-repeat;
+background-color: #222;
+}
+
+textarea {
+  color: #222;
+  border-radius: 10px;
+}
+
+/* remove outer padding */
+.main .row{
+padding: 0px;
+margin: 0px;
+}
+
+/*Remove rounded coners*/
+
+nav.sidebar.navbar {
+border-radius: 0px;
+}
+
+nav.sidebar, .main{
+  -webkit-transition: margin 200ms ease-out;
+  -moz-transition: margin 200ms ease-out;
+  -o-transition: margin 200ms ease-out;
+  transition: margin 200ms ease-out;
+}
+
+/* Add gap to nav and right windows.*/
+.main{
+padding: 10px 10px 0 10px;
+}
+
+/* .....NavBar: Icon only with coloring/layout.....*/
+
+/*small/medium side display*/
+@media (min-width: 768px) {
+
+/*Allow main to be next to Nav*/
+.main{
+  position: absolute;
+  width: calc(100% - 40px); /*keeps 100% minus nav size*/
+  margin-left: 40px;
+  float: right;
+}
+
+/*lets nav bar to be showed on mouseover
+nav.sidebar:hover + .main{
+  margin-left: 200px;
+}
+*/
+/*Center Brand*/
+nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+  margin-left: 0px;
+}
+/*Center Brand*/
+nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+  text-align: center;
+  width: 100%;
+  margin-left: 0px;
+}
+
+/*Center Icons*/
+nav.sidebar a{
+  padding-right: 13px;
+}
+
+/*adds border top to first nav box */
+nav.sidebar .navbar-nav > li:first-child{
+  border-top: 1px #e5e5e5 solid;
+}
+
+/*adds border to bottom nav boxes*/
+nav.sidebar .navbar-nav > li{
+  border-bottom: 1px #e5e5e5 solid;
+}
+
+/* Colors/style dropdown box*/
+nav.sidebar .navbar-nav .open .dropdown-menu {
+  position: static;
+  float: none;
+  width: auto;
+  margin-top: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/*allows nav box to use 100% width*/
+nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+  padding: 0 0px 0 0px;
+}
+
+/*colors dropdown box text */
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+  color: #777;
+}
+
+/*gives sidebar width/height*/
+nav.sidebar{
+  width: 200px;
+  height: 100%;
+  margin-left: -160px;
+  float: left;
+  z-index: 8000;
+  margin-bottom: 0px;
+}
+
+/*give sidebar 100% width;*/
+nav.sidebar li {
+  width: 100%;
+}
+
+/* Move nav to full on mouse over*/
+nav.sidebar:hover{
+  margin-left: 0px;
+}
+/*for hiden things when navbar hidden*/
+.forAnimate{
+  opacity: 0;
+}
+}
+
+/* .....NavBar: Fully showing nav bar..... */
+
+@media (min-width: 1330px) {
+
+/*Allow main to be next to Nav*/
+.main{
+  width: calc(100% - 200px); /*keeps 100% minus nav size*/
+  margin-left: 200px;
+}
+
+/*Show all nav*/
+nav.sidebar{
+  margin-left: 0px;
+  float: left;
+}
+/*Show hidden items on nav*/
+nav.sidebar .forAnimate{
+  opacity: 1;
+}
+}
+
+nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+color: #e5e5e5;
+background-color: transparent;
+}
+
+nav:hover .forAnimate{
+opacity: 1;
+}
+section{
+padding-left: 15px;
+}
+
+
+.login_box{
+    background:#f7f7f7;
+    border:3px solid #F4F4F4;
+    padding-left: 15px;
+    margin-bottom:25px;
+    }
+.input_title{
+    color:rgba(164, 164, 164, 0.9);
+    padding-left:3px;
+        margin-bottom: 2px;
+    }
+hr{
+    width:100%;
+}
+.welcome{
+    font-family: "myriad-pro",sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    color:#FFFFFF;
+    margin-bottom:25px;
+    margin-top:50px;
+}
+.login_title{
+    font-family: "myriad-pro",sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    color:rgba(164, 164, 164, 0.44);
+}
+.card-container.card {
+    max-width: 350px;
+}
+.btn {
+    font-weight: 700;
+    height: 36px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+    border-radius:0;
+    background:#43A6EB;
+    height: 55px;
+    margin-bottom:10px;
+}
+/*
+ * Card component
+ */
+.card {
+    background-color: #FFFFFF;
+    /* just in case there no content*/
+    padding: 1px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 15%x;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+/*
+ * Form styles
+ */
+.profile-name-card {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 1em;
+}
+.reauth-email {
+    display: block;
+    color: #404040;
+    line-height: 2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin #inputEmail,
+.form-signin #inputPassword {
+    direction: ltr;
+    height: 44px;
+    font-size: 16px;
+}
+.form-signin input[type=email],
+.form-signin input[type=password],
+.form-signin input[type=text],
+.form-signin button {
+    width: 100%;
+    display: block;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+    border-color: rgb(104, 145, 162);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+}
+.btn.btn-signin {
+    /*background-color: #4d90fe; */
+    background-color: rgb(104, 145, 162);
+    /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+    padding: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    height: 36px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+}
+.btn.btn-signin:hover,
+.btn.btn-signin:active,
+.btn.btn-signin:focus {
+    background-color: rgb(12, 97, 33);
+}
+.forgot-password {
+    color: rgb(104, 145, 162);
+}
+.forgot-password:hover,
+.forgot-password:active,
+.forgot-password:focus{
+    color: rgb(12, 97, 33);
+}
+
+
+
+.container{
+  max-width: 350px;
+  color: #fff;
+  max-width: 500px;
+  text-align: left;
+}
+
+.libitem{
+  font-size: 20pt;
+  border: 3px solid white;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 10px;
+}
+.libitem a{
+  color: white;
+}
+
+.libitem span{
+  padding: 10px;
+}
+
+.libitem span:hover{
+  cursor: pointer;
+  color: #43A6EB
+}
+
+.storeitem{
+  font-size: 20pt;
+  border: 3px solid white;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 10px;
+}
+
+.storeitem span{
+
+  padding: 10px;
+}
+
+.storeitem span:hover{
+  cursor: pointer;
+  color: #43A6EB
+}
+
+.storeitem button{
+
+  padding: 10px;
+}
+
+.storeitem button:hover{
+  cursor: pointer;
+  color: #43A6EB
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+}
+
+.modal-window {
+  background-color: #888;
+  border: 3px #CCC solid;
+  border-radius: 10px;
+  width: 500px;
+  margin: 100px auto auto auto;
+  padding: 0 30px;
+}
+
+.description {
+  font-style: italic;
+  overflow-y: auto;
+}

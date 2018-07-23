@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Indie Market</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css" />
+
+	<style>
+		input{
+			color: #000;
+		}
+	</style>
+  </head>
+  <body>
+    <div align="center">
+      <a href="loginpage.html"><button type="btn" class="btn btn-lg btn-primary">Back to Login Page</button></a>
+    </div>
+    <div id="storeContent" style="display: block" classList="active">
+      <div align="center" >
+        <div class="container">
+          <div>
+            <div>
+              <div class="form-group">
+    					  <label for="prefMedia">View by:</label>
+    					  <select onchange="setStoreMedia();" class="form-control view-media-by" id="store-view-media-by">
+    						<option value="__all__">-</option>
+    						<option value="mt">Media Type</option>
+    						<option value="art">Artist</option>
+    					  </select>
+    					</div>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-search"></span>
+                  </span>
+                  <input type="text" id="txtSearchStore" placeholder="Search..."
+                    class="form-control" placeholder="Username">
+                </div>
+              </div>
+              <div class="form-group">
+      				  <label for="prefMedia">Filter by Media Type:</label>
+                <select onchange="setStoreMedia();" class="form-control view-media-type" id="store-view-media-type">
+      				  </select>
+      				</div>
+      				<div class="form-group">
+      				  <label for="prefMedia">Filter by Artist:</label>
+      				  <select onchange="setStoreMedia();" class="form-control view-media-artiste" id="stor-view-media-artiste">
+      				  </select>
+      				</div>
+            </div>
+            <div id="view-store-media">
+            </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  <script src="./viewStoreScripts.js"></script>
+</body>
+</html>
